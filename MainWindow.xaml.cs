@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace InDevLauncher
 {
@@ -24,7 +25,7 @@ namespace InDevLauncher
         {
             InitializeComponent();
 
-            gamename.Content = "Select a game";
+            gamename.Content = "Selectionne un logiciel";
             IMG_INDEV.Visibility = Visibility.Visible;
 
             HideAddGameForm();
@@ -32,6 +33,7 @@ namespace InDevLauncher
             ReadGameAtStart();
 
             SetActu();
+
 
 
         }
@@ -49,11 +51,6 @@ namespace InDevLauncher
                         txt.Text=json;
                     }
                 }
-                /*string actu = client.DownloadString(url);
-                if (actu != String.Empty)
-                {
-                    txt.Text = actu;
-                }*/
             }
         }
 
@@ -61,7 +58,7 @@ namespace InDevLauncher
         {
             try
             {
-                string[] lines = File.ReadAllLines($@"{pathInDev}GameData.txt");
+                string[] lines = File.ReadAllLines($@"{pathInDev}Data.txt");
                 foreach (string s in lines)
                 {
                     if (s.StartsWith("- "))
@@ -74,8 +71,8 @@ namespace InDevLauncher
             catch
             {
                 Directory.CreateDirectory(pathInDev);
-                File.WriteAllText($@"{pathInDev}GameData.txt", $"");
-                MessageBox.Show("Création du fichier GameData...");
+                File.WriteAllText($@"{pathInDev}Data.txt", $"");
+                MessageBox.Show("Création du fichier Data...");
             }
         }
 
@@ -89,7 +86,7 @@ namespace InDevLauncher
             }
             catch
             {
-                MessageBoxResult result = MessageBox.Show($"Le Chemin vers l'executable n'est pas correct :\n - Vous pouvez le Modifier dans le dossier :\n\nC:/Users/{Environment.UserName}/AppData/Roaming/IndevLauncher/GameData.txt\n\n - Puis redermarer le launcher en attente de Mise a jour sur le sujet...\nOuvrir l'explorer a cette endroit ?", "ExePath invalide", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                MessageBoxResult result = MessageBox.Show($"Le Chemin vers l'executable n'est pas correct :\n - Vous pouvez le Modifier dans le dossier :\n\nC:/Users/{Environment.UserName}/AppData/Roaming/IndevLauncher/Data.txt\n\n - Puis redermarer le launcher en attente de Mise a jour sur le sujet...\nOuvrir l'explorer a cette endroit ?", "ExePath invalide", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
@@ -111,7 +108,6 @@ namespace InDevLauncher
             PathToExe.Visibility = Visibility.Hidden;
             GAME_NAME_FIELD.Visibility = Visibility.Hidden;
             PATH_TO_EXE_FIELD.Visibility = Visibility.Hidden;
-            //btn_to_path_exe.Visibility = Visibility.Hidden;
             Btn_save.Visibility = Visibility.Hidden;
 
         }
@@ -122,7 +118,6 @@ namespace InDevLauncher
             PathToExe.Visibility = Visibility.Visible;
             GAME_NAME_FIELD.Visibility = Visibility.Visible;
             PATH_TO_EXE_FIELD.Visibility = Visibility.Visible;
-            //btn_to_path_exe.Visibility = Visibility.Visible;
             Btn_save.Visibility = Visibility.Visible;
 
         }
@@ -142,7 +137,7 @@ namespace InDevLauncher
 
             HideAddGameForm();
 
-            string gameData = $@"{pathInDev}GameData.txt";
+            string gameData = $@"{pathInDev}Data.txt";
             File.AppendAllText(gameData, $"- {GameName} -|{GamePath}\n");
 
             combo_b_game.Items.Add($"- {GameName} -");
@@ -154,14 +149,14 @@ namespace InDevLauncher
         {
             Object selectedItem = combo_b_game.SelectedItem;
 
-            string[] lines = File.ReadAllLines($@"{pathInDev}GameData.txt"); //ya une erreur quand on supprime un element dans GameData.txt (soit refresh la page chaque seconde / soit fermer le launcher et le redemarer)
+            string[] lines = File.ReadAllLines($@"{pathInDev}Data.txt"); //ya une erreur quand on supprime un element dans GameData.txt (soit refresh la page chaque seconde / soit fermer le launcher et le redemarer)
             foreach (string s in lines)
             {
 #pragma warning disable CS8604
                 if (s.StartsWith(Convert.ToString(selectedItem)))
                 {
                     string[] gamedata_path = s.Split("|");
-                    path_to_exe.Content = "Exe Path : " + gamedata_path[1];
+                    path_to_exe.Content = "Chemin de l'exe : " + gamedata_path[1];
                     gamename.Content = gamedata_path[0];
                     gamePath = gamedata_path[1];
 
@@ -184,6 +179,14 @@ namespace InDevLauncher
         private void closebutton_Click_1(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
+        }
+
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
     }
 }

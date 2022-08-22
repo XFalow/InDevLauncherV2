@@ -12,7 +12,9 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown">
+
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -600,13 +602,12 @@
                             Width="566" Height="50">
                     <Label x:Name="gamename"
                            Content="Game's Name&#xD;&#xA;"
-                           HorizontalAlignment="Left"
                            VerticalContentAlignment="Center"
                            VerticalAlignment="Center"
                            Margin="10,10,0,0"
                            RenderTransformOrigin="8.228,2.562"
-                           Width="484" Grid.ColumnSpan="4"
-                           Height="57" FontFamily="Arial"
+                           Width="558" Grid.ColumnSpan="4"
+                           Height="68" FontFamily="Arial"
                            FontSize="40"
                            Foreground="White"
                            FontWeight="Bold"/>
@@ -618,14 +619,13 @@
                             HorizontalAlignment="Center"
                             Width="566" Height="50">
                     <Label x:Name="NomDuJeu"
-                           Content="Nom du jeu :"
+                           Content="Nom du logiciel :"
                            HorizontalAlignment="Left"
                            Foreground="white"
                            VerticalAlignment="Center"
                            FontSize="20"/>
                     <TextBox Style="{DynamicResource ExeTextBoxRounded}"
                              x:Name="GAME_NAME_FIELD"
-                             HorizontalAlignment="Center"
                              Text=""
                              TextWrapping="NoWrap"
                              VerticalAlignment="Center"
@@ -635,7 +635,7 @@
                              SelectionBrush="{x:Null}"
                              Background="LightYellow"
                              SelectionTextBrush="{x:Null}"
-                             Height="35"/>
+                             Height="34"/>
 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
@@ -643,7 +643,7 @@
                             HorizontalAlignment="Center"
                             Width="566" Height="50">
                     <Label x:Name="PathToExe"
-                           Content="Path to exe :"
+                           Content="Chemin del'exe :"
                            HorizontalAlignment="Left"
                            Foreground="White"
                            FontSize="20"
@@ -665,7 +665,7 @@
                             Width="566" Height="50">
                     <Button Style="{DynamicResource RoundedSaveBtn}"
                             x:Name="Btn_save"
-                            Content="Save"
+                            Content="Sauvegarder"
                             HorizontalAlignment="Center"
                             Margin="200,0,0,0"
                             Width="150"
@@ -679,9 +679,9 @@
             <StackPanel Orientation="Horizontal"
                             Margin="0,80,0,185"
                             HorizontalAlignment="Center"
-                            Width="566" Grid.ColumnSpan="3" Grid.Row="1">
+                            Width="588" Grid.ColumnSpan="3" Grid.Row="1">
                 <Label x:Name="Label_jeu"
-                         Content="Jeux :"
+                         Content="Logiciels :"
                          HorizontalAlignment="Left"
                          Foreground="White"
                          FontSize="20"
@@ -697,14 +697,13 @@
                 </ComboBox>
                 <Label x:Name="version"
                        Content="Nouveau : "
-                       HorizontalAlignment="Center"
                        Margin="150,0,0,0"
                        VerticalAlignment="Center"
                        Foreground="White"
                        FontSize="20"/>
                 <Button Style="{DynamicResource RoundedAddBtn}"
                         x:Name="Btn_Add_Game"
-                        Content="+ Add"
+                        Content="+ AJouter"
                         HorizontalAlignment="Center"
                         HorizontalContentAlignment="Center"
                         Margin="0,0,0,0"
@@ -722,7 +721,7 @@
 
             <Button Style="{DynamicResource RoundedPlayBtn}"
                     x:Name="play"
-                    Content="JOUER"
+                    Content="LANCER"
                     Grid.Column="3"
                     Grid.Row="1"
                     HorizontalAlignment="Left"
@@ -802,7 +801,7 @@
                    Source="/InDev.png"
                    Grid.Column="3"/>
             <Label x:Name="path_to_exe"
-                   Content="Exe Path : "
+                   Content="Chemin de l'exe : "
                    HorizontalAlignment="Left"
                    Margin="12,15,0,0"
                    VerticalAlignment="Top"
